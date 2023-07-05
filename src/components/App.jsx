@@ -3,28 +3,36 @@ import { useState } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { addContact, deleteContact } from 'redux/actions';
+import { addContact, deleteContact, setContacts } from 'redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const App = () => {
-
   const [filter, setFilter] = useState('');
-  const {contacts} = useSelector(state => state.contacts);
+  const { contacts } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedContacts) {
+      dispatch(setContacts(parsedContacts));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const handleAddContact = ({ id, name, number }) => {
-    const isContactExist = contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase());
+    const isContactExist = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
 
     if (!isContactExist) {
       const newContact = {
-              id,
-              name,
-              number,
-            };
+        id,
+        name,
+        number,
+      };
       dispatch(addContact(newContact));
     } else {
       window.alert(`${name} is already in contacts`);

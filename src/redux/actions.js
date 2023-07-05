@@ -1,12 +1,12 @@
 export const addContact = ({ name, number, id }) => {
-    return {
-        type: 'contacts/addToContacts',
-        payload: {
-            name, 
-            number, 
-            id
-        }
+  return {
+    type: 'contacts/addToContacts',
+    payload: {
+      name,
+      number,
+      id,
     }
+  }
 }
 
 export const deleteContact = (contactId) => {
@@ -16,4 +16,9 @@ export const deleteContact = (contactId) => {
   }
 }
 
-
+export const setContacts = (contacts) => {
+  return {
+    type: 'contacts/setNewContact',
+    payload: contacts,
+  }
+}

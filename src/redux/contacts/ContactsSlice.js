@@ -13,17 +13,14 @@ const contactsReducer = createSlice({
     name: "contacts",
     initialState,
     reducers: {
-        setContacts(state, {payload}) {
-            return ({ ...state, contacts: payload })
-        },
-        addContact(state, {payload}) { 
+        addContact(state, { payload }) {
             return ({ ...state, contacts: [...state.contacts, payload] })
         },
-        deleteContact(state, {payload}) {
+        deleteContact(state, { payload }) {
             return ({ ...state, contacts: state.contacts.filter(contact => contact.id !== payload) })
-         },
+        },
     }
 })
 
-export const { setContacts, addContact, deleteContact } = contactsReducer.actions;
+export const { addContact, deleteContact } = contactsReducer.actions;
 export default contactsReducer.reducer;

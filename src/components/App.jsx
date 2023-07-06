@@ -1,14 +1,17 @@
 import { useEffect } from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { addContact, deleteContact, setContacts } from 'redux/actions';
+import { addContact, deleteContact, setContacts } from 'redux/contacts/ContactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { filterContactsByName } from 'redux/filter/FilterSlice';
 
 const App = () => {
-  const [filter, setFilter] = useState('');
   const { contacts } = useSelector(state => state.contacts);
+  console.log(contacts)
+  const filter = useSelector(state => state.filter)
+  console.log(filter)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,7 +48,7 @@ const App = () => {
   };
 
   const filterContacts = e => {
-    setFilter(e.currentTarget.value);
+    dispatch(filterContactsByName(e.currentTarget.value));
   };
 
   const getFilteredContacts = () => {
